@@ -14,6 +14,7 @@ import {
   getListNumber,
   toNotionImageUrl
 } from "./utils";
+import Audio from "./components/audio";
 import Table from "./components/table";
 import Draggable from "react-draggable";
 
@@ -327,6 +328,17 @@ export const Block: React.FC<Block> = props => {
         <div className="notion-miro-embed">
           <iframe src={embedUrl} frameBorder={"0"} scrolling={"auto"} allowFullScreen style={{ height: value.format.block_height}}></iframe>
         </div>
+      );
+    }
+    case "audio": {
+      const value = block.value as ContentValueType;
+      const source = encodeURIComponent(value.properties.source[0][0]);
+
+      return (
+        <Audio
+          id={blockValue.id}
+          url={source}
+        />
       );
     }
     case "collection_view": {

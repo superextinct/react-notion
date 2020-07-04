@@ -232,6 +232,10 @@ interface CollectionViewType extends BaseValueType {
   type: "collection_view";
 }
 
+interface AudioValueType extends BaseValueType {
+  type: "audio";
+}
+
 /**
  * The different block values a block can have.
  */
@@ -256,7 +260,8 @@ export type BlockValueType =
   | BookmarkValueType
   | ToggleValueType
   | MiroValueType
-  | CollectionViewType;
+  | CollectionViewType
+  | AudioValueType;
 
 export interface BlockType {
   role: string;
