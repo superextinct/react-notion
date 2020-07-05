@@ -56,7 +56,7 @@ class Table extends React.Component<{ id: string }, DataState> {
                 <tr key={row.get("id")}>
                     {this.state.cols.map(col => {
                         return (
-                            <td>{row.get(col)}</td>
+                            <td className={typeof row.get(col) == "number" ? "num" : ""}>{row.get(col)}</td>
                         )
                     })}
                 </tr>
@@ -70,9 +70,9 @@ class Table extends React.Component<{ id: string }, DataState> {
                 <table className="notion-table">
                     <thead>
                         <tr key={this.state.id}>
-                            {this.state.cols.map(col => {
+                            {this.state.cols.map((col, i) => {
                                 return (
-                                    <th>{col.replace(/([0-9]+\ )/, "")}</th>
+                                    <th key={i}>{col.replace(/([0-9]+\ )/, "")}</th>
                                 )
                             })}
                         </tr>
