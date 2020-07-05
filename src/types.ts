@@ -236,6 +236,15 @@ interface AudioValueType extends BaseValueType {
   type: "audio";
 }
 
+interface FileValueType extends BaseValueType {
+  type: "file";
+  properties: {
+    size: DecorationType[];
+    title: DecorationType[];
+    source: DecorationType[];
+  }
+}
+
 /**
  * The different block values a block can have.
  */
@@ -261,7 +270,8 @@ export type BlockValueType =
   | ToggleValueType
   | MiroValueType
   | CollectionViewType
-  | AudioValueType;
+  | AudioValueType
+  | FileValueType;
 
 export interface BlockType {
   role: string;

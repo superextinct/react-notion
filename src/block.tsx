@@ -15,6 +15,7 @@ import {
   toNotionImageUrl
 } from "./utils";
 import Audio from "./components/audio";
+import File from "./components/file";
 import Table from "./components/table";
 import Draggable from "react-draggable";
 
@@ -345,6 +346,21 @@ export const Block: React.FC<Block> = props => {
       return (
         <Table id={blockValue.id} />
       );
+    }
+    case "file": {
+      const value = block.value as ContentValueType;
+      const source = encodeURIComponent(value.properties.source[0][0]);
+      const title = blockValue.properties.title[0][0];
+      const size = blockValue.properties.size[0][0];
+
+      return (
+        <File
+          id={blockValue.id}
+          url={source}
+          title={title}
+          size={size}
+        />
+      )
     }
     default:
       if (process.env.NODE_ENV !== "production") {
