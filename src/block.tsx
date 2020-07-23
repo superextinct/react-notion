@@ -7,7 +7,6 @@ import {
 } from "./types";
 import Asset from "./components/asset";
 import Code from "./components/code";
-import PageIcon from "./components/page-icon";
 import {
   classNames,
   getTextContent,
@@ -71,60 +70,38 @@ interface Block {
 }
 
 export const Block: React.FC<Block> = props => {
-  const { block, children, level, fullPage, blockMap } = props;
+  const { block, children, level, blockMap } = props;
   const blockValue = block?.value;
   switch (blockValue?.type) {
     case "page":
       if (level === 0) {
-        if (fullPage) {
-          if (!blockValue.properties) {
-            return null;
-          }
+        if (!blockValue.properties) {
+          return null;
+        }
 
-          const {
-            page_icon,
-            page_cover,
-            page_cover_position,
-            page_full_width,
-            page_small_text
-          } = blockValue.format || {};
+        const {
+          page_cover,
+          page_cover_position
+        } = blockValue.format || {};
 
+        if (page_cover) {
           const coverPosition = (1 - (page_cover_position || 0.5)) * 100;
 
           return (
             <div className="notion">
               {page_cover && (
-                <img
-                  src={toNotionImageUrl(page_cover)}
-                  alt={getTextContent(blockValue.properties.title)}
-                  className="notion-page-cover"
-                  style={{
-                    objectPosition: `center ${coverPosition}%`
-                  }}
-                />
-              )}
-              <div
-                className={classNames(
-                  "notion-page",
-                  !page_cover && "notion-page-offset",
-                  page_full_width && "notion-full-width",
-                  page_small_text && "notion-small-text"
-                )}
-              >
-                {page_icon && (
-                  <PageIcon
-                    className={
-                      page_cover ? "notion-page-icon-offset" : undefined
-                    }
-                    block={block}
-                    big
+                <div className="notion-cover">
+                  <img
+                    src={toNotionImageUrl(page_cover)}
+                    alt={getTextContent(blockValue.properties.title)}
+                    className="notion-page-cover"
+                    style={{
+                      objectPosition: `center ${coverPosition}%`
+                    }}
                   />
-                )}
-                <div className="notion-title">
-                  {renderChildText(blockValue.properties.title)}
                 </div>
-                {children}
-              </div>
+              )}
+              {children}
             </div>
           );
         } else {
@@ -184,10 +161,10 @@ export const Block: React.FC<Block> = props => {
         blockValue.type === "bulleted_list" ? (
           <ul className="notion-list notion-list-disc">{content}</ul>
         ) : (
-          <ol start={start} className="notion-list notion-list-numbered">
-            {content}
-          </ol>
-        );
+            <ol start={start} className="notion-list notion-list-numbered">
+              {content}
+            </ol>
+          );
 
       let output: JSX.Element | null = null;
 
@@ -219,8 +196,8 @@ export const Block: React.FC<Block> = props => {
 
       return (
         <figure
-          className={`notion-asset-wrapper ${(value.format.block_aspect_ratio && blockValue.type == "image" ?  "notion-asset-inline" : "" )}`}
-          style={{ width: `${(value.format.block_width/708* (value.format.block_aspect_ratio && blockValue.type == "image" ? 50 : 100))}%` }}
+          className={`notion-asset-wrapper ${(value.format.block_aspect_ratio && blockValue.type == "image" ? "notion-asset-inline" : "")}`}
+          style={{ width: `${(value.format.block_width / 708 * (value.format.block_aspect_ratio && blockValue.type == "image" ? 50 : 100))}%` }}
         >
           <Asset block={block} />
           {value.properties.caption && (
@@ -259,9 +236,9 @@ export const Block: React.FC<Block> = props => {
     case "quote":
       if (!blockValue.properties) return null;
       return (
-          <blockquote className="notion-quote">
-            {renderChildText(blockValue.properties.title)}
-          </blockquote>
+        <blockquote className="notion-quote">
+          {renderChildText(blockValue.properties.title)}
+        </blockquote>
       );
     case "callout":
       return (
@@ -270,10 +247,10 @@ export const Block: React.FC<Block> = props => {
             className={classNames(
               "notion-callout",
               blockValue.format.block_color &&
-                `notion-${blockValue.format.block_color}_co`
+              `notion-${blockValue.format.block_color}_co`
             )}
           >
-              {renderChildText(blockValue.properties.title)}
+            {renderChildText(blockValue.properties.title)}
           </div>
         </Draggable>
       );
@@ -286,7 +263,7 @@ export const Block: React.FC<Block> = props => {
             className={classNames(
               "notion-bookmark",
               blockValue.format.block_color &&
-                `notion-${blockValue.format.block_color}`
+              `notion-${blockValue.format.block_color}`
             )}
             href={blockValue.properties.link[0][0]}
           >
@@ -327,7 +304,7 @@ export const Block: React.FC<Block> = props => {
       const embedUrl = "https://miro.com/app/embed/" + embedId + "/?autoplay=yep";
       return (
         <div className="notion-miro-embed">
-          <iframe src={embedUrl} frameBorder={"0"} scrolling={"auto"} allowFullScreen style={{ height: value.format.block_height}}></iframe>
+          <iframe src={embedUrl} frameBorder={"0"} scrolling={"auto"} allowFullScreen style={{ height: value.format.block_height }}></iframe>
         </div>
       );
     }
