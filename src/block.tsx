@@ -196,7 +196,7 @@ export const Block: React.FC<Block> = props => {
 
       return (
         <figure
-          className={`notion-asset-wrapper ${(value.format.block_aspect_ratio && blockValue.type == "image" ? "notion-asset-inline" : "")}`}
+          className={`notion-asset-wrapper ${(value.format.block_page_width == false && blockValue.type == "image" ? "notion-asset-inline" : "")}`}
           style={{ width: `${(value.format.block_width / 708 * (value.format.block_aspect_ratio && blockValue.type == "image" ? 50 : 100))}%` }}
         >
           <Asset block={block} />
