@@ -1,4 +1,5 @@
 import * as React from "react";
+import nl2br from "react-nl2br";
 import {
   DecorationType,
   BlockType,
@@ -21,7 +22,7 @@ import Draggable from "react-draggable";
 export const renderChildText = (properties: DecorationType[]) => {
   return properties?.map(([text, decorations], i) => {
     if (!decorations) {
-      return <React.Fragment key={i}>{text}</React.Fragment>;
+      return <React.Fragment key={i}>{nl2br(text)}</React.Fragment>;
     }
 
     return decorations.reduceRight((element, decorator) => {
@@ -52,9 +53,9 @@ export const renderChildText = (properties: DecorationType[]) => {
           );
 
         default:
-          return <React.Fragment key={i}>{element}</React.Fragment>;
+          return <React.Fragment key={i}>{nl2br(element)}</React.Fragment>;
       }
-    }, <>{text}</>);
+    }, <>{nl2br(text)}</>);
   });
 };
 
