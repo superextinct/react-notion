@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BlockType, ContentValueType } from "../types";
 import { toNotionImageUrl } from "../utils";
+import Player from "./player";
 
 const types = ["video", "image", "embed"];
 
@@ -23,18 +24,29 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
   const aspectRatio = block_aspect_ratio || block_height / block_width;
 
   if (type === "embed" || type === "video") {
-    return (
-      <div className="w-full">
-        <div
-          style={{
-            paddingBottom: `${aspectRatio * 100}%`,
-            position: "relative"
-          }}
-        >
-          <iframe className="notion-image-inset" src={display_source} />
+    if (display_source.endsWith(".mp4")) {
+      return (
+        <div className="w-full">
+          <Player
+            id={value.id}
+            url={encodeURIComponent(display_source)}
+          />
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="w-full">
+          <div
+            style={{
+              paddingBottom: `${aspectRatio * 100}%`,
+              position: "relative"
+            }}
+          >
+            <iframe className="notion-image-inset" src={display_source} />
+          </div>
+        </div>
+      );
+    }
   }
 
   const src = toNotionImageUrl(value.properties.source[0][0]);
