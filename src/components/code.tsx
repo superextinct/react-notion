@@ -10,10 +10,10 @@ const Code: React.FC<{ code: string; language: string }> = ({
     languages[language.toLowerCase()] || languages.javascript;
 
   return (
-    <div className="rounded-lg bg-gray-800">
-      <pre className="scrollbar-none m-0 p-0">
+    <div className="notion-code">
+      <pre className="m-0 p-0">
         <code
-          className={`language-${language.toLowerCase()} inline-block p-4 scrolling-touch`}
+          className={`language-${language.toLowerCase()}`}
           dangerouslySetInnerHTML={{
             __html: highlight(code, prismLanguage, language)
           }}
