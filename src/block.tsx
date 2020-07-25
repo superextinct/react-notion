@@ -302,10 +302,10 @@ export const Block: React.FC<Block> = props => {
     case "miro": {
       const value = block.value as ContentValueType;
       const embedId = value.properties.source[0][0].replace("https://miro.com/app/board/", "");
-      const embedUrl = "https://miro.com/app/embed/" + embedId + "/?autoplay=yep";
+      const embedUrl = "https://miro.com/app/embed/" + embedId + "?autoplay=yep";
       return (
         <div className="notion-miro-embed">
-          <iframe src={embedUrl} frameBorder={"0"} scrolling={"auto"} allowFullScreen style={{ height: value.format.block_height }}></iframe>
+          <iframe src={embedUrl} frameBorder={"0"} scrolling={"auto"} referrerPolicy={"no-referrer-when-downgrade"} allowFullScreen height={value.format.block_height} width={value.format.block_width}></iframe>
         </div>
       );
     }
