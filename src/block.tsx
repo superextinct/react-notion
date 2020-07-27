@@ -305,7 +305,7 @@ export const Block: React.FC<Block> = props => {
       const embedUrl = "https://miro.com/app/embed/" + embedId + "?autoplay=yep";
       return (
         <div className="notion-miro-embed">
-          <iframe src={embedUrl} frameBorder={"0"} scrolling={"auto"} referrerPolicy={"no-referrer-when-downgrade"} allowFullScreen height={value.format.block_height} width={value.format.block_width}></iframe>
+          <iframe src={embedUrl} frameBorder={"0"} scrolling={"auto"} referrerPolicy={"no-referrer-when-downgrade"} allowFullScreen height={value.format.block_height} width="100%"></iframe>
         </div>
       );
     }

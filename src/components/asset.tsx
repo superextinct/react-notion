@@ -24,7 +24,7 @@ const Asset: React.FC<{ block: BlockType }> = ({ block }) => {
   const aspectRatio = block_aspect_ratio || block_height / block_width;
 
   if (type === "embed" || type === "video") {
-    if (display_source.endsWith(".mp4")) {
+    if (display_source.endsWith(".mp4") || display_source.endsWith(".m4v")) {
       return (
         <div className="w-full">
           <Player
